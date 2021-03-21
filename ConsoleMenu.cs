@@ -362,12 +362,11 @@ namespace Bam.Net.Testing
             }
         }
 
-        // run tests for a given commit
-        //  get the origin for the current git repo
-        //  find the artifact for the given commit
-        //  download the artifact
-        //  unzip 
-        //  run tests accepting appropriate command line args
+        [ConsoleAction("commit", "[git_commit_sha]", "Run bam test suite for a specified git commit")]
+        public void RunTestsForCommit()
+        {
+
+        }
         
         private static DirectoryInfo EnsureOutputDirectories(string tag)
         {
