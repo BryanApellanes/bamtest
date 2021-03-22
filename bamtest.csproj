@@ -51,6 +51,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\_lib\bam.net.core\bam.net.core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.17.0" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="PuppeteerSharp" Version="3.0.0" />
+  </ItemGroup>
   <Target Name="PublishAll" BeforeTargets="GenerateNuspec">
     <ItemGroup>
       <_TargetFramework Include="$(TargetFrameworks)" />
