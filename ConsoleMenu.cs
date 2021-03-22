@@ -256,16 +256,16 @@ namespace Bam.Net.Testing
 
                 if (succeeded.Count > 0)
                 {
-                    OutLineFormat("{0} tests passed", ConsoleColor.Green, succeeded.Count);
-                    succeeded.Each(unitTest => OutLineFormat("{0} passed", ConsoleColor.Green, unitTest.Description));
+                    Message.PrintLine("{0} tests passed", ConsoleColor.Green, succeeded.Count);
+                    succeeded.Each(unitTest => Message.PrintLine("{0} passed", ConsoleColor.Green, unitTest.Description));
                 }
 
                 if (failed.Count > 0)
                 {
                     StringBuilder failures = new StringBuilder();
                     failed.Keys.Each(unitTest => failures.AppendLine($"{unitTest.Description}: {failed[unitTest].Message}\r\n{failed[unitTest].StackTrace}\r\n"));
-                    OutLineFormat("There were {0} failures", failed.Count);
-                    OutLine(failures.ToString(), ConsoleColor.Magenta);
+                    Message.PrintLine("There were {0} failures", failed.Count);
+                    Message.PrintLine(failures.ToString(), ConsoleColor.Magenta);
                     Exit(1);
                 }
                 else
@@ -274,7 +274,7 @@ namespace Bam.Net.Testing
                 }
             }
 
-            OutLineFormat("No files found in ({0}) for search pattern ({1})", testDirectoryName, searchPattern);
+            Message.PrintLine("No files found in ({0}) for search pattern ({1})", testDirectoryName, searchPattern);
             Exit(1);
         }
 
@@ -287,11 +287,11 @@ namespace Bam.Net.Testing
             }
             catch (Exception ex)
             {
-                OutLineFormat("Failed to load assembly from file {0}: {1}", ConsoleColor.Yellow, file.FullName, ex.Message);
+                Message.PrintLine("Failed to load assembly from file {0}: {1}", ConsoleColor.Yellow, file.FullName, ex.Message);
                 return;
             }
 
-            OutLineFormat("Loaded assembly {0}", ConsoleColor.Green, testAssembly.FullName);
+            Message.PrintLine("Loaded assembly {0}", ConsoleColor.Green, testAssembly.FullName);
             List<UnitTestMethod> testMethods = UnitTestMethod.FromAssembly(testAssembly).Where(unitTestMethod =>
             {
                 if (unitTestMethod.Method.HasCustomAttributeOfType<TestGroupAttribute>(out TestGroupAttribute testGroupAttribute))
@@ -302,12 +302,12 @@ namespace Bam.Net.Testing
                 return false;
             }).ToList();
             
-            OutLineFormat("Found ({0}) tests in group ({1}) in assembly ({2})", ConsoleColor.Blue, testMethods.Count, testGroupName, testAssembly.FullName);
+            Message.PrintLine("Found ({0}) tests in group ({1}) in assembly ({2})", ConsoleColor.Blue, testMethods.Count, testGroupName, testAssembly.FullName);
             testMethods.Each(testMethod =>
             {
                 if (testMethod.TryInvoke(ex =>
                 {
-                    OutLineFormat("{0} failed: {1}", testMethod.Description, ex.Message);
+                    Message.PrintLine("{0} failed: {1}", testMethod.Description, ex.Message);
                     failed.Add(testMethod, ex);
                 }))
                 {
@@ -324,8 +324,8 @@ namespace Bam.Net.Testing
         public static void RunUnitTestsInFile(string assemblyPath, string endDirectory)
         {
             Message.PrintLine("Running UnitTests: {0}", ConsoleColor.DarkGreen, assemblyPath);
-            assemblyPath = assemblyPath ?? Arguments["UnitTests"];
-            endDirectory = endDirectory ?? Environment.CurrentDirectory;
+            assemblyPath ??= Arguments["UnitTests"];
+            endDirectory ??= Environment.CurrentDirectory;
             try
             {
                 Setup();
@@ -349,7 +349,7 @@ namespace Bam.Net.Testing
         [ConsoleAction("IntegrationTests", "[path_to_test_assembly]", "Run integration tests in the specified assembly")]
         public static void RunIntegrationTestsInFile(string assemblyPath = null, string endDirectory = null)
         {
-            assemblyPath = assemblyPath ?? Arguments["IntegrationTests"];
+            assemblyPath ??= Arguments["IntegrationTests"];
             try
             {
                 Setup();
@@ -362,6 +362,12 @@ namespace Bam.Net.Testing
             }
         }
 
+        [ConsoleAction("commit", "[git_commit_sha]", "Run bam test suite for a specified git commit")]
+        public void RunTestsForCommit()
+        {
+
+        }
+        
         private static DirectoryInfo EnsureOutputDirectories(string tag)
         {
             Message.PrintLine("Creating output directories as necessary: OutputRoot={0}, tag={1}", ConsoleColor.Cyan, OutputRoot, tag);
