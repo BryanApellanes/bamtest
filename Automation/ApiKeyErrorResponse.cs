@@ -9,7 +9,7 @@ namespace Bam.Net.Testing.Automation
     {
         static ApiKeyErrorResponse()
         {
-            FilePath = Path.Combine(BamProfile.Data, $"{nameof(ApiKeyErrorResponse)}.json");
+            FilePath = Path.Combine(BamProfile.DataPath, $"{nameof(ApiKeyErrorResponse)}.json");
         }
 
         public static string FilePath { get; set; }
