@@ -108,9 +108,6 @@ namespace Bam.Net.Testing.Automation
         public static NavigationOptions DefaultNavigationOptions => new NavigationOptions { Timeout = 15000 }; // our default 5 and half seconds
         public static NavigationOptions OriginalTimeoutNavigationOptions => new NavigationOptions { Timeout = 30000 }; // actual internal default explicitly set here for visibility
 
-        public event EventHandler SigningIn;
-        public event EventHandler SignedIn;
-
         private string screenshotsDirectory = null;
 
         public string ScreenShotsDirectory
