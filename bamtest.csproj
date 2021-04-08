@@ -15,10 +15,10 @@
     <NuspecProperties>publishDir=$([MSBuild]::NormalizeDirectory($(IntermediatePackDir)))</NuspecProperties>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>\opt\bam\build\bamtest\debug\</OutputPath>
+    <OutputPath>\opt\bam\build\debug\bamtest\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>\opt\bam\build\bamtest\release</OutputPath>
+    <OutputPath>\opt\bam\build\release\bamtest\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="alembic.ico" />
