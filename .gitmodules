@@ -1,0 +1,6 @@
+[submodule "submodules/bam.core"]
+	path = submodules/bam.core
+	url = git@github.com:BryanApellanes/Bam.Core.git
+[submodule "submodules/bam.net.github.actions"]
+	path = submodules/bam.net.github.actions
+	url = git@github.com:BryanApellanes/Bam.Net.Github.Actions.git
