@@ -1,9 +1,9 @@
 using System.Reflection;
 using Bam.Net;
 
-[assembly: AssemblyVersion("1.0.5.0")]
-[assembly: AssemblyFileVersion("1.0.5.0")]
-[assembly: AssemblyCommit("15d0f3d")]
-[assembly: AssemblySemanticVersion("1.0.5-test+15d0f3d")]
-[assembly: AssemblyDescription("SemanticVersion=1.0.5-test+15d0f3d, Revision=1.0.5.4289360063")]
+[assembly: AssemblyVersion("1.0.6.0")]
+[assembly: AssemblyFileVersion("1.0.6.0")]
+[assembly: AssemblyCommit("c98fe8f")]
+[assembly: AssemblySemanticVersion("1.0.6-c98fe8f")]
+[assembly: AssemblyDescription("SemanticVersion=1.0.6-c98fe8f, Revision=1.0.6.937499436")]
 [assembly: AssemblyProduct("bamtest")]
