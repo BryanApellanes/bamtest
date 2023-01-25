@@ -21,6 +21,7 @@ namespace Bam.Net.Testing
 {
     public partial class Program
     {
+        /*
         /// <summary>
         /// Gets the path to OpenCover.Console.exe.
         /// </summary>
@@ -86,7 +87,7 @@ namespace Bam.Net.Testing
                 output.StandardOutput.SafeWriteToFile(outputFile, true);
             }
         }
-
+*/
         [ConsoleAction("Recipe", "[path_to_bake_recipe_dot_json]", "Run tests found in the projects referenced by the specified recipe.")]
         public static void RunTestsForRecipe()
         {
@@ -368,7 +369,7 @@ namespace Bam.Net.Testing
 
         }
         
-        private static DirectoryInfo EnsureOutputDirectories(string tag)
+/*        private static DirectoryInfo EnsureOutputDirectories(string tag)
         {
             Message.PrintLine("Creating output directories as necessary: OutputRoot={0}, tag={1}", ConsoleColor.Cyan, OutputRoot, tag);
             DirectoryInfo outputDirectory = new DirectoryInfo(Path.Combine(OutputRoot, tag));
@@ -387,7 +388,7 @@ namespace Bam.Net.Testing
             }
 
             return outputDirectory;
-        }
+        }*/
         
         private static IEnumerable<FileInfo> GetDllsAndExes(FileInfo[] files)
         {

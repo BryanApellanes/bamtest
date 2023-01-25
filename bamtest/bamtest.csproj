@@ -55,13 +55,13 @@
     <DeployManifest Remove="obj\Debug\netcoreapp2.2\bamtest.application" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\_lib\bam.net.core\bam.net.core.csproj" />
-    <ProjectReference Include="..\..\_lib\bam.net.github.actions\bam.net.github.actions\bam.net.github.actions.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="4.17.0" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="PuppeteerSharp" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\submodules\bam.core\bam.core\bam.core.csproj" />
+    <ProjectReference Include="..\submodules\bam.net.github.actions\bam.net.github.actions\bam.net.github.actions.csproj" />
   </ItemGroup>
   <Target Name="PublishAll" BeforeTargets="GenerateNuspec">
     <ItemGroup>
