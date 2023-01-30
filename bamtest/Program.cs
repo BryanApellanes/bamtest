@@ -190,19 +190,19 @@ namespace Bam.Net.Testing
             }
             else
             {
-                OutLineFormat("Getting default tests");
+                Message.PrintLine("Getting default tests");
                 List<FileInfo> tmp = new List<FileInfo>();
                 tmp.AddRange(testDir.GetFiles("*tests.exe"));
                 tmp.AddRange(testDir.GetFiles("*tests.dll"));
                 files = tmp.ToArray();
             }
-            OutLineFormat("retrieved ({0}) files", files.Length);
+            Message.PrintLine("retrieved ({0}) files", files.Length);
             return files;
         }
        
         private static DirectoryInfo GetTestDirectory()
         {
-            OutLine("Getting test directory");
+            Message.PrintLine("Getting test directory");
             DirectoryInfo testDir = new DirectoryInfo(".");
             if (Arguments.Contains("dir"))
             {
@@ -210,11 +210,11 @@ namespace Bam.Net.Testing
                 testDir = new DirectoryInfo(dir);
                 if (!testDir.Exists)
                 {
-                    OutLineFormat("The specified directory ({0}) was not found", ConsoleColor.Magenta, dir);
+                    Message.PrintLine("The specified directory ({0}) was not found", ConsoleColor.Magenta, dir);
                     Exit(1);
                 }
             }
-            OutLineFormat("Got test directory: {0}", testDir.FullName);
+            Message.PrintLine("Got test directory: {0}", testDir.FullName);
             return testDir;
         }
     }
