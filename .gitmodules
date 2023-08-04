@@ -4,3 +4,6 @@
 [submodule "submodules/bam.net.github.actions"]
 	path = submodules/bam.net.github.actions
 	url = git@github.com:BryanApellanes/Bam.Net.Github.Actions.git
+[submodule "submodules/bam.test"]
+	path = submodules/bam.test
+	url = git@github.com:BryanApellanes/bam.test.git
