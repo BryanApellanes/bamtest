@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.test", "bam.test\bam.test.csproj", "{B3574AB5-DB2D-4C06-8B84-2F701C7A6301}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submdules", "submdules", "{840E1AA1-6939-4F40-B85B-DBBF60CEBE21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.core", "submodules\bam.core\bam.core\bam.core.csproj", "{9DE56EAF-F1DA-4C2B-9DB2-98B96BF1E766}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "bam.net.shared", "submodules\bam.core\submodules\bam.net.shared\bam.net.shared.shproj", "{22DA9F9E-A84F-47EE-A870-3CC845812606}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3574AB5-DB2D-4C06-8B84-2F701C7A6301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3574AB5-DB2D-4C06-8B84-2F701C7A6301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3574AB5-DB2D-4C06-8B84-2F701C7A6301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3574AB5-DB2D-4C06-8B84-2F701C7A6301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE56EAF-F1DA-4C2B-9DB2-98B96BF1E766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE56EAF-F1DA-4C2B-9DB2-98B96BF1E766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE56EAF-F1DA-4C2B-9DB2-98B96BF1E766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE56EAF-F1DA-4C2B-9DB2-98B96BF1E766}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9DE56EAF-F1DA-4C2B-9DB2-98B96BF1E766} = {840E1AA1-6939-4F40-B85B-DBBF60CEBE21}
+		{22DA9F9E-A84F-47EE-A870-3CC845812606} = {840E1AA1-6939-4F40-B85B-DBBF60CEBE21}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D2C73C1-1F7F-44CD-876E-5C78E2B2F585}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		submodules\bam.core\submodules\bam.net.shared\bam.net.shared.projitems*{22da9f9e-a84f-47ee-a870-3cc845812606}*SharedItemsImports = 13
+		submodules\bam.core\submodules\bam.net.shared\bam.net.shared.projitems*{9de56eaf-f1da-4c2b-9db2-98b96bf1e766}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
