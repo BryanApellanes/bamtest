@@ -20,11 +20,10 @@
   <ItemGroup>
     <PackageReference Include="bam.testing.vs" Version="2.0.0" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\submodules\bam.base\bam.base\bam.base.csproj" />
-    <ProjectReference Include="..\submodules\bam.commandline\bam.commandline\bam.commandline.csproj" />
-    <ProjectReference Include="..\submodules\bam.testing\bam.testing\bam.testing.csproj" />
+    <ProjectReference Include="..\..\bam.base\bam.base\bam.base.csproj" />
+    <ProjectReference Include="..\..\bam.commandline\bam.commandline\bam.commandline.csproj" />
+    <ProjectReference Include="..\..\bam.testing\bam.testing\bam.testing.csproj" />
   </ItemGroup>
 
 </Project>

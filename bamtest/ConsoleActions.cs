@@ -1,6 +1,6 @@
 ﻿using Bam.CommandLine;
-using Bam.Net.CommandLine;
-using Bam.Testing.Unit;
+using Bam.Console;
+using Bam.Testing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
