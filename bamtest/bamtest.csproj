@@ -18,9 +18,6 @@
     <OutputPath Condition=" '$(OS)' == 'UNIX' ">$(HOME)\.bam\build\$(Configuration)\$(MSBuildThisFileName)\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="bam.testing.vs" Version="2.0.0" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\bam.base\bam.base\bam.base.csproj" />
     <ProjectReference Include="..\..\bam.commandline\bam.commandline\bam.commandline.csproj" />
     <ProjectReference Include="..\..\bam.testing\bam.testing\bam.testing.csproj" />
