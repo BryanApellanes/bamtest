@@ -1,11 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Bam.CommandLine;
+using Bam.Console;
 
-public class Program: CommandLineTool
+public class Program
 {
     static void Main(string[] args)
     {
-        ExecuteMainOrInteractive(args);
+        BamConsoleContext.StaticMain(args);
     }
 }
