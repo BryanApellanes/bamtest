@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Bam.CommandLine;
 using Bam.Console;
 
 public class Program
