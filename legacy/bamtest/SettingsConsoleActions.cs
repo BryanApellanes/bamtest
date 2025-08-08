@@ -1,5 +1,4 @@
 using System;
-using Bam.Net.CommandLine;
 
 namespace Bam.Net.Testing
 {

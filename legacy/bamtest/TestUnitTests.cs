@@ -1,16 +1,17 @@
-﻿using Bam.Net.Testing.Unit;
-using System;
+﻿using System;
+using Bam.Console;
+using Bam.Test;
 
 namespace Bam.Net.Testing
 {
     [Serializable]
-    public class TestUnitTests: CommandLineTool
+    public class TestUnitTests: UnitTestMenuContainer
     {
         [UnitTest]
         public void PassingTest()
         {
             Expect.IsTrue(true);
-            Pass("Passing test should pass");
+            Message.PrintLine("Passing test should pass");
         }
 
         [UnitTest]

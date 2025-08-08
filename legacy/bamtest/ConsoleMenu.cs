@@ -12,10 +12,15 @@ using System.IO;
 using System.Diagnostics;
 using System.Runtime.Loader;
 using System.Threading;
+using Bam.Console;
+using Bam.Logging;
 using Bam.Net.Automation;
 using Bam.Net.Data;
 using Bam.Net.Automation.Testing;
 using Bam.Net.Testing.Unit;
+using Bam.Test;
+using Bam.Test.Integration;
+using Bam.Test.Unit;
 
 namespace Bam.Net.Testing
 {
@@ -325,7 +330,7 @@ namespace Bam.Net.Testing
         public static void RunUnitTestsInFile(string assemblyPath, string endDirectory)
         {
             Message.PrintLine("Running UnitTests: {0}", ConsoleColor.DarkGreen, assemblyPath);
-            assemblyPath ??= Arguments["UnitTests"];
+            assemblyPath ??= BamConsoleContext.Current.Arguments["UnitTests"];
             endDirectory ??= Environment.CurrentDirectory;
             try
             {

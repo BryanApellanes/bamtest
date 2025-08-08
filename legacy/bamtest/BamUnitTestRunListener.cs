@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Bam.Net.CommandLine;
-using Bam.Net.Logging;
-using Bam.Net.Testing.Unit;
+using Bam.Console;
+using Bam.Logging;
+using Bam.Test;
+using Bam.Test.Unit;
 
 namespace Bam.Net.Testing
 {
     public class BamUnitTestRunListener: UnitTestRunListener
     {
-        public BamUnitTestRunListener(string resultDirectory) : base(resultDirectory, "BamUnitTests")
+        public BamUnitTestRunListener(string resultDirectory)// : base(resultDirectory, "BamUnitTests")
         {
             FailedTests = new HashSet<UnitTestFailure>();
         }
