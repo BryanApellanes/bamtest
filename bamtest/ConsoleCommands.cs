@@ -1,4 +1,5 @@
-﻿using Bam.Console;
+﻿using System;
+using Bam.Console;
 using Bam.DependencyInjection;
 using Bam.Services;
 using Bam.Shell;
