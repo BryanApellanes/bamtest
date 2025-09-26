@@ -1,6 +1,3 @@
-
-
-
 using Bam.Console;
 
 namespace Bam.Application
