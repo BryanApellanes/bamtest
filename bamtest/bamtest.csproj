@@ -68,6 +68,7 @@
     <PackageReference Include="FluentAssertions" Version="4.17.0" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="PuppeteerSharp" Version="3.0.0" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\bam.base\bam.base\bam.base.csproj" />
