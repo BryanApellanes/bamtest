@@ -32,6 +32,18 @@ namespace BamTest
             Console.WriteLine("----------------------------------------");
             Console.WriteLine($"  Total: {TotalPassed} passed, {TotalFailed} failed across {Results.Count} project(s)");
             Console.WriteLine($"  Result: {(AllPassed ? "ALL PASSED" : "FAILURES DETECTED")}");
+
+            var coverageFiles = Results.Where(r => r.CoverageOutputPath != null).ToList();
+            if (coverageFiles.Count > 0)
+            {
+                Console.WriteLine("----------------------------------------");
+                Console.WriteLine("  Coverage reports:");
+                foreach (var r in coverageFiles)
+                {
+                    Console.WriteLine($"    {r.ProjectName}: {r.CoverageOutputPath}");
+                }
+            }
+
             Console.WriteLine("========================================");
             Console.WriteLine();
         }

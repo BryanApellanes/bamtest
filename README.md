@@ -95,6 +95,65 @@ Select an option below:
 
 "Run All" options discover and run every test project. "Run" options (without "All") prompt you to select a specific project from the discovered list.
 
+## Code Coverage
+
+bamtest integrates with [`dotnet-coverage`](https://learn.microsoft.com/en-us/dotnet/core/additional-tools/dotnet-coverage) to collect code coverage for any test run. Because bam.test is a custom test runner (not xUnit/NUnit), the standard `dotnet test --collect` workflow does not apply; `dotnet-coverage collect` is used instead, which can instrument any .NET process.
+
+### Prerequisites
+
+Install the `dotnet-coverage` global tool:
+
+```bash
+dotnet tool install --global dotnet-coverage
+```
+
+### Single Project (bam.test)
+
+When running a single test project with `--coverage`, bam.test re-launches the current process under `dotnet-coverage collect`. The `--coverage` flag is stripped from the child process args to prevent recursion.
+
+```bash
+# Collect coverage for a single test project
+dotnet run --project submodules/bam.console/bam.console.tests/bam.console.tests.csproj -- --ut --coverage
+
+# Custom output file
+dotnet run --project submodules/bam.console/bam.console.tests/bam.console.tests.csproj -- --ut --coverage --coverage-output=myreport.xml
+
+# Custom format
+dotnet run --project submodules/bam.console/bam.console.tests/bam.console.tests.csproj -- --ut --coverage --coverage-format=xml
+```
+
+This produces a `coverage.cobertura.xml` (or the specified filename) in the working directory.
+
+### Multi-Project (bamtest)
+
+When running across multiple projects with `--coverage`, bamtest wraps each project's execution in `dotnet-coverage collect`, producing a separate coverage file per project.
+
+```bash
+# Coverage for all discovered test projects
+bamtest --ut --coverage --sln=bamtk.sln
+
+# Via dotnet run
+dotnet run --project submodules/bamtest/bamtest/bamtest.csproj -- --ut --coverage --sln=bamtk.sln
+```
+
+Each project gets a file named `{projectName}.coverage.cobertura.xml`. The aggregate summary includes coverage file locations:
+
+```
+========================================
+  bamtest Aggregate Summary
+========================================
+  [PASS] bam.base.tests - 12 passed, 0 failed (4.2s)
+  [PASS] bam.console.tests - 5 passed, 0 failed (2.1s)
+----------------------------------------
+  Total: 17 passed, 0 failed across 2 project(s)
+  Result: ALL PASSED
+----------------------------------------
+  Coverage reports:
+    bam.base.tests: C:\src\repos\bamtk\bam.base.tests.coverage.cobertura.xml
+    bam.console.tests: C:\src\repos\bamtk\bam.console.tests.coverage.cobertura.xml
+========================================
+```
+
 ## Arguments
 
 | Argument | Description |
@@ -105,6 +164,9 @@ Select an option below:
 | `--sln=<path>` | Path to a `.sln` file for test project discovery |
 | `--dir=<path>` | Directory to scan recursively for `*.tests.csproj` files |
 | `--assemblyDir=<path>` | Directory to scan for pre-built `*tests.dll` assemblies |
+| `--coverage` | Enable code coverage collection via `dotnet-coverage` |
+| `--coverage-output=<path>` | Coverage output file path (default: `coverage.cobertura.xml`) |
+| `--coverage-format=<fmt>` | Coverage output format (default: `cobertura`) |
 
 Arguments use `=` to separate name and value (e.g., `--sln=bamtk.sln`).
 
@@ -138,5 +200,7 @@ Output from each project is streamed to the console in real-time. After all proj
   Result: FAILURES DETECTED
 ========================================
 ```
+
+When `--coverage` is enabled, the summary also lists the coverage report paths (see [Code Coverage](#code-coverage)).
 
 The process exits with code 1 if any tests fail.

@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using Bam.Test;
 
 namespace BamTest
 {
@@ -17,7 +18,7 @@ namespace BamTest
         /// </summary>
         /// <param name="csprojPath">Full path to the .csproj file.</param>
         /// <param name="testSwitch">The test switch without leading dashes (e.g., "ut", "it", "spec").</param>
-        public TestProjectResult Run(string csprojPath, string testSwitch)
+        public TestProjectResult Run(string csprojPath, string testSwitch, CoverageOptions? coverage = null)
         {
             string projectName = Path.GetFileNameWithoutExtension(csprojPath);
             Console.WriteLine();
@@ -29,10 +30,26 @@ namespace BamTest
                 ProjectName = projectName
             };
 
+            string fileName;
+            string arguments;
+
+            if (coverage != null)
+            {
+                string coverageFile = $"{projectName}.coverage.{GetExtensionForFormat(coverage.Format)}";
+                fileName = CoverageOptions.ToolName;
+                arguments = $"collect --output \"{coverageFile}\" --output-format {coverage.Format} -- dotnet run --project \"{csprojPath}\" -- --{testSwitch}";
+                result.CoverageOutputPath = Path.GetFullPath(coverageFile);
+            }
+            else
+            {
+                fileName = "dotnet";
+                arguments = $"run --project \"{csprojPath}\" -- --{testSwitch}";
+            }
+
             var startInfo = new ProcessStartInfo
             {
-                FileName = "dotnet",
-                Arguments = $"run --project \"{csprojPath}\" -- --{testSwitch}",
+                FileName = fileName,
+                Arguments = arguments,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -86,6 +103,16 @@ namespace BamTest
                 result.Passed = int.Parse(match.Groups[1].Value);
                 result.Failed = int.Parse(match.Groups[2].Value);
             }
+        }
+
+        private static string GetExtensionForFormat(string format)
+        {
+            return format.ToLowerInvariant() switch
+            {
+                "cobertura" => "cobertura.xml",
+                "xml" => "xml",
+                _ => format
+            };
         }
     }
 }

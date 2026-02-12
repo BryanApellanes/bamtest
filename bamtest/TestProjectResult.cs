@@ -10,6 +10,7 @@ namespace BamTest
         public int Passed { get; set; }
         public int Failed { get; set; }
         public TimeSpan Duration { get; set; }
+        public string? CoverageOutputPath { get; set; }
         public bool Success => ExitCode == 0 && Failed == 0;
     }
 }
