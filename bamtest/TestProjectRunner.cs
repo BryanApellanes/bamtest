@@ -32,12 +32,15 @@ namespace BamTest
 
             string fileName;
             string arguments;
+            string? settingsPath = null;
 
             if (coverage != null)
             {
-                string coverageFile = $"{projectName}.coverage.{GetExtensionForFormat(coverage.Format)}";
+                string coverageFile = $"{projectName}.coverage.{CoverageOptions.GetExtensionForFormat(coverage.Format)}";
                 fileName = CoverageOptions.ToolName;
-                arguments = $"collect --output \"{coverageFile}\" --output-format {coverage.Format} -- dotnet run --project \"{csprojPath}\" -- --{testSwitch}";
+                settingsPath = coverage.GenerateSettingsFile();
+                string settingsArg = settingsPath != null ? $" --settings \"{settingsPath}\"" : "";
+                arguments = $"collect --output \"{coverageFile}\" --output-format {coverage.Format}{settingsArg} -- dotnet run --project \"{csprojPath}\" -- --{testSwitch}";
                 result.CoverageOutputPath = Path.GetFullPath(coverageFile);
             }
             else
@@ -58,31 +61,38 @@ namespace BamTest
 
             var stopwatch = Stopwatch.StartNew();
 
-            using (var process = new Process { StartInfo = startInfo })
+            try
             {
-                process.OutputDataReceived += (sender, e) =>
+                using (var process = new Process { StartInfo = startInfo })
                 {
-                    if (e.Data != null)
+                    process.OutputDataReceived += (sender, e) =>
                     {
-                        Console.WriteLine(e.Data);
-                        ParseSummaryLine(e.Data, result);
-                    }
-                };
+                        if (e.Data != null)
+                        {
+                            Console.WriteLine(e.Data);
+                            ParseSummaryLine(e.Data, result);
+                        }
+                    };
 
-                process.ErrorDataReceived += (sender, e) =>
-                {
-                    if (e.Data != null)
+                    process.ErrorDataReceived += (sender, e) =>
                     {
-                        Console.Error.WriteLine(e.Data);
-                    }
-                };
+                        if (e.Data != null)
+                        {
+                            Console.Error.WriteLine(e.Data);
+                        }
+                    };
 
-                process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-                process.WaitForExit();
+                    process.Start();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+                    process.WaitForExit();
 
-                result.ExitCode = process.ExitCode;
+                    result.ExitCode = process.ExitCode;
+                }
+            }
+            finally
+            {
+                CoverageOptions.CleanupSettingsFile(settingsPath);
             }
 
             stopwatch.Stop();
@@ -103,16 +113,6 @@ namespace BamTest
                 result.Passed = int.Parse(match.Groups[1].Value);
                 result.Failed = int.Parse(match.Groups[2].Value);
             }
-        }
-
-        private static string GetExtensionForFormat(string format)
-        {
-            return format.ToLowerInvariant() switch
-            {
-                "cobertura" => "cobertura.xml",
-                "xml" => "xml",
-                _ => format
-            };
         }
     }
 }

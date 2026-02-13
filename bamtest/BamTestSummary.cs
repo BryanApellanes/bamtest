@@ -12,6 +12,7 @@ namespace BamTest
         }
 
         public List<TestProjectResult> Results { get; set; }
+        public string? MergedCoverageOutputPath { get; set; }
         public int TotalPassed => Results.Sum(r => r.Passed);
         public int TotalFailed => Results.Sum(r => r.Failed);
         public bool AllPassed => Results.All(r => r.Success);
@@ -41,6 +42,11 @@ namespace BamTest
                 foreach (var r in coverageFiles)
                 {
                     Console.WriteLine($"    {r.ProjectName}: {r.CoverageOutputPath}");
+                }
+                if (!string.IsNullOrEmpty(MergedCoverageOutputPath))
+                {
+                    Console.WriteLine("  Merged report:");
+                    Console.WriteLine($"    {MergedCoverageOutputPath}");
                 }
             }
 

@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using Bam.Test;
 
 namespace BamTest
@@ -38,6 +41,11 @@ namespace BamTest
             {
                 List<string> projects = DiscoverProjects(slnPath, dirPath);
                 RunProjects(projects, testSwitch, summary, coverage);
+            }
+
+            if (coverage != null)
+            {
+                MergeCoverageReports(summary, coverage);
             }
 
             summary.PrintSummary();
@@ -119,6 +127,70 @@ namespace BamTest
             {
                 var result = _assemblyRunner.Run(assembly, testSwitch, coverage);
                 summary.Results.Add(result);
+            }
+        }
+
+        private void MergeCoverageReports(BamTestSummary summary, CoverageOptions coverage)
+        {
+            var coverageFiles = summary.Results
+                .Where(r => !string.IsNullOrEmpty(r.CoverageOutputPath) && File.Exists(r.CoverageOutputPath))
+                .Select(r => r.CoverageOutputPath!)
+                .ToList();
+
+            if (coverageFiles.Count == 0)
+            {
+                Console.WriteLine("No coverage files to merge.");
+                return;
+            }
+
+            string mergedFile = $"bamtk.coverage.{CoverageOptions.GetExtensionForFormat(coverage.Format)}";
+            string inputFiles = string.Join(" ", coverageFiles.Select(f => $"\"{f}\""));
+            string mergeArgs = $"merge --output \"{mergedFile}\" --output-format {coverage.Format} {inputFiles}";
+
+            Console.WriteLine();
+            Console.WriteLine($"Merging {coverageFiles.Count} coverage report(s)...");
+
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = CoverageOptions.ToolName,
+                Arguments = mergeArgs,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            using var process = new Process { StartInfo = startInfo };
+
+            process.OutputDataReceived += (sender, e) =>
+            {
+                if (e.Data != null)
+                {
+                    Console.WriteLine(e.Data);
+                }
+            };
+
+            process.ErrorDataReceived += (sender, e) =>
+            {
+                if (e.Data != null)
+                {
+                    Console.Error.WriteLine(e.Data);
+                }
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+
+            if (process.ExitCode == 0)
+            {
+                summary.MergedCoverageOutputPath = Path.GetFullPath(mergedFile);
+                Console.WriteLine($"Merged coverage report: {summary.MergedCoverageOutputPath}");
+            }
+            else
+            {
+                Console.Error.WriteLine("Failed to merge coverage reports.");
             }
         }
     }
