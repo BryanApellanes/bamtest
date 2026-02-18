@@ -32,8 +32,8 @@
 	<OutputPath Condition=" '$(OS)' == 'UNIX' ">$(HOME)\.bam\build\$(Configuration)\$(MSBuildThisFileName)\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\bam.base\bam.base\bam.base.csproj" />
-    <ProjectReference Include="..\..\bam.test\bam.test\bam.test.csproj" />
+    <ProjectReference Include="$(BamFrameworkRoot)bam.base\bam.base\bam.base.csproj" />
+    <ProjectReference Include="$(BamFrameworkRoot)bam.test\bam.test\bam.test.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="CommandLineTestTool.cs" />
@@ -71,8 +71,8 @@
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\bam.base\bam.base\bam.base.csproj" />
-    <ProjectReference Include="..\..\bam.test\bam.test\bam.test.csproj" />
+    <ProjectReference Include="$(BamFrameworkRoot)bam.base\bam.base\bam.base.csproj" />
+    <ProjectReference Include="$(BamFrameworkRoot)bam.test\bam.test\bam.test.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Arguments.cs" />
