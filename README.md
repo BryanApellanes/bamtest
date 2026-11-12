@@ -183,8 +183,10 @@ bamtest supports three discovery strategies:
 
 Each discovered test project is run out-of-process:
 
-- **Projects**: `dotnet run --project <csproj> -- --ut` (or `--it`, `--spec`)
+- **Projects**: `dotnet run --project <csproj> --property:BamPlatformTargets=false -- --ut` (or `--it`, `--spec`)
 - **Assemblies**: `dotnet <assembly.dll> --ut` (or `--it`, `--spec`)
+
+`--property:BamPlatformTargets=false` keeps a project with platform targets (bam.maui) to its plain `net10.0` build. A project run this way is built outside `bamtk.sln`, so the solution's own switch doesn't apply, and the platform builds would need the MAUI workloads. bamtest passes it on the command line, never through the environment. An exported variable would reach every later build in that shell, and bam.maui ignores one (warning `BAMMAUI001`). Assemblies are already built, so they get nothing.
 
 Output from each project is streamed to the console in real-time. After all projects complete, an aggregate summary is printed:
 

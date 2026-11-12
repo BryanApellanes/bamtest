@@ -13,7 +13,7 @@ namespace BamTest
             RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
-        /// Run a test project out-of-process via: dotnet run --project &lt;csproj&gt; -- --&lt;testSwitch&gt;
+        /// Run a test project out-of-process via: dotnet run --project &lt;csproj&gt; --property:BamPlatformTargets=false -- --&lt;testSwitch&gt;
         /// Streams output to console in real-time and parses the test summary line.
         /// </summary>
         /// <param name="csprojPath">Full path to the .csproj file.</param>
@@ -40,13 +40,13 @@ namespace BamTest
                 fileName = CoverageOptions.ToolName;
                 settingsPath = coverage.GenerateSettingsFile();
                 string settingsArg = settingsPath != null ? $" --settings \"{settingsPath}\"" : "";
-                arguments = $"collect --output \"{coverageFile}\" --output-format {coverage.Format}{settingsArg} -- dotnet run --project \"{csprojPath}\" -- --{testSwitch}";
+                arguments = TestBuildProperties.CoveredRunArguments($"collect --output \"{coverageFile}\" --output-format {coverage.Format}{settingsArg}", csprojPath, testSwitch);
                 result.CoverageOutputPath = Path.GetFullPath(coverageFile);
             }
             else
             {
                 fileName = "dotnet";
-                arguments = $"run --project \"{csprojPath}\" -- --{testSwitch}";
+                arguments = TestBuildProperties.RunArguments(csprojPath, testSwitch);
             }
 
             var startInfo = new ProcessStartInfo
