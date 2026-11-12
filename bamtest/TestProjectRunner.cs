@@ -13,7 +13,7 @@ namespace BamTest
             RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
-        /// Run a test project out-of-process via: dotnet run --project &lt;csproj&gt; -- --&lt;testSwitch&gt;
+        /// Run a test project out-of-process via: dotnet run --project &lt;csproj&gt; --property:BamPlatformTargets=false -- --&lt;testSwitch&gt;
         /// Streams output to console in real-time and parses the test summary line.
         /// </summary>
         /// <param name="csprojPath">Full path to the .csproj file.</param>
@@ -30,34 +30,19 @@ namespace BamTest
                 ProjectName = projectName
             };
 
-            string fileName;
-            string arguments;
+            string? collectArguments = null;
             string? settingsPath = null;
 
             if (coverage != null)
             {
                 string coverageFile = $"{projectName}.coverage.{CoverageOptions.GetExtensionForFormat(coverage.Format)}";
-                fileName = CoverageOptions.ToolName;
                 settingsPath = coverage.GenerateSettingsFile();
                 string settingsArg = settingsPath != null ? $" --settings \"{settingsPath}\"" : "";
-                arguments = $"collect --output \"{coverageFile}\" --output-format {coverage.Format}{settingsArg} -- dotnet run --project \"{csprojPath}\" -- --{testSwitch}";
+                collectArguments = $"collect --output \"{coverageFile}\" --output-format {coverage.Format}{settingsArg}";
                 result.CoverageOutputPath = Path.GetFullPath(coverageFile);
             }
-            else
-            {
-                fileName = "dotnet";
-                arguments = $"run --project \"{csprojPath}\" -- --{testSwitch}";
-            }
 
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = fileName,
-                Arguments = arguments,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
+            ProcessStartInfo startInfo = CreateStartInfo(csprojPath, testSwitch, collectArguments);
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -103,6 +88,38 @@ namespace BamTest
             Console.WriteLine();
 
             return result;
+        }
+
+        /// <summary>
+        /// The start info for one test project run: <c>dotnet run</c> with <see cref="TestBuildProperties.PlatformTargetsArgument"/>,
+        /// under the coverage tool when <paramref name="collectArguments"/> is given.
+        /// </summary>
+        /// <param name="csprojPath">Full path to the test project.</param>
+        /// <param name="testSwitch">The test switch without leading dashes (e.g. "ut").</param>
+        /// <param name="collectArguments">The coverage tool's own arguments, or null to run without coverage.</param>
+        /// <remarks>
+        /// A <c>BamPlatformTargets</c> in bamtest's own environment is taken out of the child's (any letter case): the
+        /// property on the command line is what counts, and an inherited variable would only make bam.maui warn
+        /// (BAMMAUI001). bamtest's own environment is not changed.
+        /// </remarks>
+        public static ProcessStartInfo CreateStartInfo(string csprojPath, string testSwitch, string? collectArguments)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = collectArguments is null ? "dotnet" : CoverageOptions.ToolName,
+                Arguments = collectArguments is null
+                    ? TestBuildProperties.RunArguments(csprojPath, testSwitch)
+                    : TestBuildProperties.CoveredRunArguments(collectArguments, csprojPath, testSwitch),
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+            foreach (string name in startInfo.Environment.Keys.Where(key => string.Equals(key, TestBuildProperties.PlatformTargetsVariable, StringComparison.OrdinalIgnoreCase)).ToList())
+            {
+                startInfo.Environment.Remove(name);
+            }
+            return startInfo;
         }
 
         private void ParseSummaryLine(string line, TestProjectResult result)
