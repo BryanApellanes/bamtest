@@ -16,6 +16,9 @@ namespace BamTest
         /// <remarks>The long form: on <c>dotnet run</c>, <c>-p</c> has meant <c>--project</c>.</remarks>
         public const string PlatformTargetsArgument = "--property:BamPlatformTargets=false";
 
+        /// <summary>The property's name, which bamtest keeps out of the environment of the builds it starts.</summary>
+        public const string PlatformTargetsVariable = "BamPlatformTargets";
+
         /// <summary>The arguments of <c>dotnet</c> for running one test project.</summary>
         /// <param name="csprojPath">Full path to the test project.</param>
         /// <param name="testSwitch">The test switch without leading dashes (e.g. "ut").</param>

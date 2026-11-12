@@ -186,7 +186,7 @@ Each discovered test project is run out-of-process:
 - **Projects**: `dotnet run --project <csproj> --property:BamPlatformTargets=false -- --ut` (or `--it`, `--spec`)
 - **Assemblies**: `dotnet <assembly.dll> --ut` (or `--it`, `--spec`)
 
-`--property:BamPlatformTargets=false` keeps a project with platform targets (bam.maui) to its plain `net10.0` build. A project run this way is built outside `bamtk.sln`, so the solution's own switch doesn't apply, and the platform builds would need the MAUI workloads. bamtest passes it on the command line, never through the environment. An exported variable would reach every later build in that shell, and bam.maui ignores one (warning `BAMMAUI001`). Assemblies are already built, so they get nothing.
+`--property:BamPlatformTargets=false` keeps a project with platform targets (bam.maui) to its plain `net10.0` build. A project run this way is built outside `bamtk.sln`, so the solution's own switch doesn't apply, and the platform builds would need the MAUI workloads. bamtest passes it on the command line, never through the environment. An exported variable would reach every later build in that shell, and bam.maui ignores one (warning `BAMMAUI001`). If bamtest's own environment has `BamPlatformTargets`, it is taken out of the child's so the warning doesn't show; bamtest's environment itself is left alone. There's no opt-in to platform targets during a test run: the test projects are `net10.0`, so a platform build would add nothing. Assemblies are already built, so they get nothing.
 
 Output from each project is streamed to the console in real-time. After all projects complete, an aggregate summary is printed:
 
