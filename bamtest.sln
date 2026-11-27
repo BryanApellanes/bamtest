@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.testing", "submodules\bam.testing\bam.testing\bam.testing.csproj", "{AA5FD688-E02E-4FDA-B8FE-8B247F55C7F0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "legacy", "legacy", "{FF4AE6AB-0D5F-4468-B221-FFA775A4D85E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.core", "legacy\submodules\bam.core\bam.core\bam.core.csproj", "{6B5B049D-864A-4C53-9A6F-40861BA18537}"
@@ -12,8 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6745EDE3-35CC-474A-ACAF-B407626E6CB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.base", "submodules\bam.base\bam.base\bam.base.csproj", "{92A38D54-00B3-48B1-B16F-B130F4602D38}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.commandline", "submodules\bam.commandline\bam.commandline\bam.commandline.csproj", "{6F9565C3-D1F3-454E-81CD-83A691C53C02}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bam.configuration", "submodules\bam.configuration\bam.configuration\bam.configuration.csproj", "{24E46422-BBDD-4795-8A43-6DC152065D7C}"
 EndProject
@@ -55,10 +51,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA5FD688-E02E-4FDA-B8FE-8B247F55C7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA5FD688-E02E-4FDA-B8FE-8B247F55C7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA5FD688-E02E-4FDA-B8FE-8B247F55C7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA5FD688-E02E-4FDA-B8FE-8B247F55C7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B5B049D-864A-4C53-9A6F-40861BA18537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B5B049D-864A-4C53-9A6F-40861BA18537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B5B049D-864A-4C53-9A6F-40861BA18537}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,10 +59,6 @@ Global
 		{92A38D54-00B3-48B1-B16F-B130F4602D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92A38D54-00B3-48B1-B16F-B130F4602D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92A38D54-00B3-48B1-B16F-B130F4602D38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F9565C3-D1F3-454E-81CD-83A691C53C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F9565C3-D1F3-454E-81CD-83A691C53C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F9565C3-D1F3-454E-81CD-83A691C53C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F9565C3-D1F3-454E-81CD-83A691C53C02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24E46422-BBDD-4795-8A43-6DC152065D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24E46422-BBDD-4795-8A43-6DC152065D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24E46422-BBDD-4795-8A43-6DC152065D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
